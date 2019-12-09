@@ -9,6 +9,7 @@ import (
 	"strconv"
 )
 
+// Collect function will collect information from iostat
 func Collect(sender Sender, interval int) error {
 	const IOStatCommand = "iostat"
 
