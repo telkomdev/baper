@@ -52,11 +52,16 @@ func TestSplit(t *testing.T) {
 
 func TestParse(t *testing.T) {
 	input := "  318.44    9  2.79   4  1 95  3.02 2.01 1.73"
+	var expectedKBPerTime float64 = 318.44
 
 	t.Run("should success parse string to stat", func(t *testing.T) {
 		cpuStat := Parse(input)
 		if cpuStat == nil {
 			t.Error("error parse input")
+		}
+
+		if cpuStat.Disk.KBPerTime != expectedKBPerTime {
+			t.Error("error disk KB/t should equal to ", expectedKBPerTime)
 		}
 	})
 }
