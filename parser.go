@@ -48,13 +48,14 @@ func split(text string) []string {
 	return result
 }
 
+// isNumber function
 func isNumber(v string) bool {
 	_, err := strconv.ParseFloat(v, 64)
 	return err == nil
 }
 
-// Parse function
-func Parse(text string) *CPUStat {
+// parse function
+func parse(text string) *CPUStat {
 	trimmed := trim(text)
 	splited := split(trimmed)
 

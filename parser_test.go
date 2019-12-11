@@ -55,7 +55,7 @@ func TestParse(t *testing.T) {
 	var expectedKBPerTime float64 = 318.44
 
 	t.Run("should success parse string to stat", func(t *testing.T) {
-		cpuStat := Parse(input)
+		cpuStat := parse(input)
 		if cpuStat == nil {
 			t.Error("error parse input")
 		}
