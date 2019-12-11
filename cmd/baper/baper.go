@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/signal"
+	"syscall"
 
 	"github.com/telkomdev/baper"
 )
@@ -44,9 +46,29 @@ func main() {
 	}
 
 	sender := baper.StdoutSender{}
+	collector := baper.New(sender, interval)
 
-	if err := baper.Collect(sender, interval); err != nil {
+	kill := make(chan os.Signal, 1)
+	// notify when user interrupt the process
+	signal.Notify(kill, syscall.SIGINT, syscall.SIGTERM)
+
+	go waitNotify(kill, collector)
+
+	if err := collector.Collect(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
+	}
+}
+
+func waitNotify(kill chan os.Signal, collector *baper.Collector) {
+	select {
+	case <-kill:
+		err := collector.Kill()
+		if err != nil {
+			fmt.Println("error kill process, ", err)
+			os.Exit(1)
+		}
+
+		fmt.Println("kill process")
 	}
 }
