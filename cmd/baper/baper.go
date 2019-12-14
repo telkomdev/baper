@@ -45,6 +45,16 @@ func main() {
 		os.Exit(0)
 	}
 
+	// TODO
+	// create output file
+	// file, err := os.Create("out.txt")
+	// if err != nil {
+	// 	fmt.Println(err)
+	// 	os.Exit(1)
+	// }
+
+	// defer file.Close()
+
 	sender := baper.IOWriterSender{Writer: os.Stdout}
 	collector := baper.New(sender, interval)
 
