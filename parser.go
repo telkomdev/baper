@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
+	"time"
 )
 
 // CPUStat struct
@@ -11,6 +12,7 @@ type CPUStat struct {
 	Disk        Disk        `json:"disk"`
 	CPU         CPU         `json:"cpu"`
 	LoadAverage LoadAverage `json:"loadAverage"`
+	TimeStamp   time.Time   `json:"timeStamp"`
 }
 
 // Disk struct
@@ -80,5 +82,6 @@ func parse(text string) *CPUStat {
 		Disk:        Disk{KBPerTime: datas[0], TPS: datas[1], MBPerSecond: datas[2]},
 		CPU:         CPU{User: datas[3], System: datas[4], Idle: datas[5]},
 		LoadAverage: LoadAverage{OneMinute: datas[6], FiveMinute: datas[7], FifteenMinute: datas[8]},
+		TimeStamp:   time.Now(),
 	}
 }
