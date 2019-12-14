@@ -45,7 +45,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	sender := baper.StdoutSender{}
+	sender := baper.IOWriterSender{Writer: os.Stdout}
 	collector := baper.New(sender, interval)
 
 	kill := make(chan os.Signal, 1)
