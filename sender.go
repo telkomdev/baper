@@ -2,7 +2,7 @@ package baper
 
 import (
 	"bytes"
-	"os"
+	"io"
 )
 
 // Sender interface
@@ -10,14 +10,15 @@ type Sender interface {
 	Send([]byte) error
 }
 
-// StdoutSender struct
+// IOWriterSender struct
 // you can create your own implementation
-type StdoutSender struct {
+type IOWriterSender struct {
+	Writer io.Writer
 }
 
-func (sender StdoutSender) Send(line []byte) error {
+func (sender IOWriterSender) Send(line []byte) error {
 	reader := bytes.NewReader(line)
-	_, err := reader.WriteTo(os.Stdout)
+	_, err := reader.WriteTo(sender.Writer)
 
 	if err != nil {
 		return err
